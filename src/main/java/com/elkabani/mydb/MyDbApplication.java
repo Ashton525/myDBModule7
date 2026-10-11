@@ -3,6 +3,7 @@ package com.elkabani.mydb;
 import com.elkabani.mydb.entities.Address;
 import com.elkabani.mydb.entities.User;
 import com.elkabani.mydb.repositories.UserRepository;
+import com.elkabani.mydb.services.ProductService;
 import com.elkabani.mydb.services.UserService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,9 +16,20 @@ public class MyDbApplication {
 
       ApplicationContext context = SpringApplication.run(MyDbApplication.class, args);
     //  var repository = context.getBean(UserRepository.class);
-        var service = context.getBean(UserService.class);
+    //    var service = context.getBean(UserService.class);
     //    service.showEntityState();
-        service.showRelatedEntities();
+    //    service.showRelatedEntities();
+
+        var productService = context.getBean(ProductService.class);
+
+        var electronics = productService.createProductWithNewCategory();
+        productService.printProducts();
+
+        var headphones = productService.createProductForExistingCategory(electronics.getId());
+        productService.printProducts();
+
+        productService.deleteProduct(headphones.getId());
+        productService.printProducts();
   /*    var user = User.builder()
                 .name("John")
                 .email("john@example.com")
